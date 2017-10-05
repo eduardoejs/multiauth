@@ -9,6 +9,7 @@ class Admin extends Authenticatable
 {
     use Notifiable;
 
+    //defino o guard do model Admin
     protected $guard = 'admin';
 
     /**

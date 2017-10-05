@@ -14,7 +14,8 @@ class AdminLoginController extends Controller
         // middleware "guest:admin" - isso nos permite acessar este formulário, mesmo que estivéssemos logados como
         //                            um usuário, porque ainda somos convidados no administrador
         //redireciona para login se a pessoa nao estiver logada como admin
-        $this->middleware('guest:admin');
+        // o array como segundo parametro é para que o middleware "guest" nao seja aplicado ao acessar o logout
+        $this->middleware('guest:admin', ['except' => 'logout']);
     }
 
     public function showLoginForm()
@@ -38,5 +39,11 @@ class AdminLoginController extends Controller
 
         // If unsuccessful, then redirect back to the login with the form data
         return redirect()->back()->withInput($request->only('email', 'remember'));
+    }
+
+    public function logout()
+    {
+        Auth::guard('admin')->logout();
+        return redirect('/');
     }
 }
